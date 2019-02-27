@@ -115,7 +115,6 @@ namespace Sapper.Controllers
         }
         public static int[,] GetPole()
         {
-
             return Pole;
         }
         
