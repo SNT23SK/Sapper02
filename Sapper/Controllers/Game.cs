@@ -61,8 +61,10 @@ namespace Sapper.Controllers
                 }
             }
             while (count > 0);
-        }
 
+            
+            
+        }
         private static int CalcNeigbourCells(Cell cell)
         {
               int i = cell.I;
@@ -80,8 +82,8 @@ namespace Sapper.Controllers
             {
                 result++;
             }
-            //3
-            if(i<Pole.GetLength(0)-1 && Pole[i+1,j-1] ==-1)
+            //3 вылет за пределы
+            if(i>Pole.GetLength(0)-1 && Pole[i+1,j-1] ==-1)
             {
                 result++;
             }
@@ -110,14 +112,40 @@ namespace Sapper.Controllers
             {
                 result++;
             }
-            
             return result;
         }
+        // ебучая инкампсуляция ебучего метода
+        public static int GetNeigbour(Cell cell)
+        {
+           return CalcNeigbourCells(cell);
+        }
+        //
+        /// <summary>
+        /// метод возвращвет значение поля по координатам [,]
+        /// </summary>
+        /// <returns></returns>
         public static int[,] GetPole()
         {
             return Pole;
         }
-        
+        //пробуем получить значение поля
+        public static int GetPole(Cell cell)
+        {
+            int i = cell.I;
+            int j = cell.J;
+            if (Pole[i,j]>=0)
+            {
+                Pole[i, j] = GetNeigbour(cell);
+            }
+            
+            return Pole[i, j];
+        }
+        /*
+        internal static int GetCellByButton(Cell next_cell)
+        {
+
+            throw new NotImplementedException();
+        }*/
         #endregion
 
     }

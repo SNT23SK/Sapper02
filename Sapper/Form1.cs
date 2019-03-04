@@ -61,15 +61,32 @@ namespace Sapper
                 int value = Game.GetPole()[((Cell)sender).I, ((Cell)sender).J];
                 if (value==-1)
                 {
-                    ((Cell)sender).Text = "Ж";
+                    ((Cell)sender).Text = "Х";
                     ((Cell)sender).FlatStyle = FlatStyle.Flat;
                 }
+                else if(value>0)
+                {
+                    ((Cell)sender).FlatStyle = FlatStyle.Flat;
+                   
 
+                    ((Cell)sender).Text = value.ToString();
+                }
+                else
+                {
+                    ((Cell)sender).FlatStyle = FlatStyle.Flat;
+                    ShowArea((Cell)sender);
+                }
+
+                /*
                 if (string.IsNullOrEmpty(((Cell)sender).Text))
                 {
                     ((Cell)sender).FlatStyle = FlatStyle.Flat;
-                }
+                    //
+                    
+                    ((Cell)sender).Text = " ";
 
+                }
+                */
 
             }
             if (e.Button == MouseButtons.Right)
@@ -105,6 +122,7 @@ namespace Sapper
                 {
                     return item;
                 }
+               
                 
             }
             return null;
@@ -113,7 +131,35 @@ namespace Sapper
 
         private void ShowArea(Cell cell)
         {
-            throw new NotImplementedException();
+           //if (cell.I >= 0 && cell.J >= 0 && cell.I <= 10 && cell.J <= 10)
+           
+            
+                int[,] shift = new int[,] { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+
+                if (cell != null)
+                {
+                    for (int i = 0; i < shift.GetLength(0); i++)
+                    {
+                        Cell next_cell = GetCellByCoordinates(cell.I + shift[i, 0], cell.J + shift[i, 1]);
+                        if (next_cell != null)
+                        {
+                            if (Game.GetPole(next_cell) == 0)
+                            {
+                                next_cell.FlatStyle = FlatStyle.Flat;
+                                //ShowArea(next_cell);
+                            }
+                            else if (Game.GetPole(next_cell) != -1)
+                            {
+                                next_cell.FlatStyle = FlatStyle.Flat;
+                                next_cell.Text = Game.GetPole(next_cell).ToString();
+                            }
+
+                        }
+
+                    }
+                }
+            
+              //  throw new NotImplementedException();
         }
         #endregion
 
